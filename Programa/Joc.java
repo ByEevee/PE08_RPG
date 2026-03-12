@@ -13,15 +13,15 @@ public class Joc {
     private Scanner sc;
  
     private static final Arma[] POOL_ARMES = {
-        new Arma("Espasa de ferro",   "Espasa", false, 30),
-        new Arma("Espasa llarga",     "Espasa", false, 45),
-        new Arma("Excalivur",         "Espasa", true,  75),
-        new Arma("Bastó de foc",      "Bastó",  true,  60),
-        new Arma("Bastó de gel",      "Bastó",  true,  55),
-        new Arma("Bastó del llamp",   "Bastó",  true,  75),
-        new Arma("Arc de fusta",      "Arc",    false, 20),
-        new Arma("Arc Magic",         "Arc",    true,  40),
-        new Arma("Arc de caça",       "Arc",    false, 35),
+        new Arma("Espasa de ferro",   "Espasa", false, 70),
+        new Arma("Espasa llarga",     "Espasa", false, 85),
+        new Arma("Excalivur",         "Espasa", true,  95),
+        new Arma("Bastó de foc",      "Bastó",  true,  80),
+        new Arma("Bastó de gel",      "Bastó",  true,  75),
+        new Arma("Bastó del llamp",   "Bastó",  true,  95),
+        new Arma("Arc de fusta",      "Arc",    false, 60),
+        new Arma("Arc Magic",         "Arc",    true,  70),
+        new Arma("Arc de caça",       "Arc",    false, 55),
     };
  
     // Getters i Setters 
@@ -140,8 +140,7 @@ public class Joc {
         double[] stats         = new double[7]; // 6 stats + sort
         int      puntsRestants = Personatge.TOTAL_PUNTS;
  
-        System.out.printf("%nRepartiràs %d punts entre 6 stats (min %d, max %d)%n",
-                Personatge.TOTAL_PUNTS, Personatge.MIN_STAT, Personatge.MAX_STAT);
+        System.out.printf("%nRepartiràs %d punts entre 6 stats (min %d, max %d)%n", Personatge.TOTAL_PUNTS, Personatge.MIN_STAT, Personatge.MAX_STAT);
  
         for (int i = 0; i < Personatge.NUM_STATS; i++) {
             if (i == Personatge.NUM_STATS - 1) {
@@ -193,7 +192,7 @@ public class Joc {
         System.out.printf("%n%s, tria el teu personatge:%n", nomJugador);
         for (int i = 0; i < disponibles.size(); i++) {
             Personatge p = disponibles.get(i);
-            System.out.printf("  %d. %-12s [%-4s]  ❤ %.0f/%.0f%n",
+            System.out.printf("  %d. %-12s [%-4s]  ( HP ) %.0f/%.0f%n",
                     i + 1, p.getNom(), p.getRaca(),
                     p.getSalut(), p.getSalutMaxima());
         }
@@ -220,20 +219,20 @@ public class Joc {
  
         int torn = 1;
         while (p1.estaViu() && p2.estaViu()) {
-            System.out.printf("%n━━━━━━ TORN %d ━━━━━━%n", torn);
+            System.out.printf("%n========= TORN %d =========%n", torn);
             mostrarBarra(p1, p2);
  
-            System.out.printf("%n▶ Torn de %s (%s)%n", jugador1, p1.getNom());
+            System.out.printf("%n( -> ) Torn de %s (%s)%n", jugador1, p1.getNom());
             tornJugador(p1, p2);
             if (!p2.estaViu()) break;
  
-            System.out.printf("%n▶ Torn de %s (%s)%n", jugador2, p2.getNom());
+            System.out.printf("%n( -> ) Torn de %s (%s)%n", jugador2, p2.getNom());
             tornJugador(p2, p1);
             if (!p1.estaViu()) break;
  
             p1.regenerarVida(); p1.regenerarMana();
             p2.regenerarVida(); p2.regenerarMana();
-            System.out.println("  [Fi de torn — vida i maná recuperats parcialment]");
+            System.out.println("  [Fi de torn - vida i maná recuperats parcialment]");
             torn++;
         }
         System.out.println();
@@ -241,17 +240,17 @@ public class Joc {
         System.out.println("║       FI DEL COMBAT          ║");
         System.out.println("╚══════════════════════════════╝");
         if (p1.estaViu())
-            System.out.printf("🏆  Guanyador: %s (%s)%n", jugador1, p1.getNom());
+            System.out.printf(" ( ! )  Guanyador: %s (%s)%n", jugador1, p1.getNom());
         else
-            System.out.printf("🏆  Guanyador: %s (%s)%n", jugador2, p2.getNom());
+            System.out.printf(" ( ! )  Guanyador: %s (%s)%n", jugador2, p2.getNom());
     
     }
     
     private void mostrarBarra(Personatge p1, Personatge p2) {
-        System.out.printf("  %-12s  ( ❤ ) %6.1f/%-6.1f  ( 🧙 ) %6.1f/%-6.1f%n",
+        System.out.printf("  %-12s  ( HP ) %6.1f/%-6.1f  ( M ) %6.1f/%-6.1f%n",
                 p1.getNom(), p1.getSalut(), p1.getSalutMaxima(),
                 p1.getMana(),  p1.getManaMaxima());
-        System.out.printf("  %-12s  ( ❤ ) %6.1f/%-6.1f  ( 🧙 ) %6.1f/%-6.1f%n",
+        System.out.printf("  %-12s  ( HP ) %6.1f/%-6.1f  ( M ) %6.1f/%-6.1f%n",
                 p2.getNom(), p2.getSalut(), p2.getSalutMaxima(),
                 p2.getMana(),  p2.getManaMaxima());
     }

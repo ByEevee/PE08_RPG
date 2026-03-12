@@ -38,7 +38,7 @@ public class Personatge {
     public static final int TOTAL_PUNTS = 70;
     public static final int MIN_STAT    =  5;
     public static final int MAX_STAT    = 20;
-    public static final int NUM_STATS   =  7;
+    public static final int NUM_STATS   =  6;
     public static final int MIN_SORT    =  0;
     public static final int MAX_SORT    =  4;
 
@@ -198,19 +198,19 @@ public class Personatge {
     
     public void rebreDanyAtac(double dany) {
         if (esquivar()) {
-            System.out.printf("   ( → ) %s ha ESQUIVAT l'atac!%n", nom);
+            System.out.printf("   ( ---> ) %s ha ESQUIVAT l'atac!%n", nom);
             return;
         }
         if (estaDefenent) {
             dany         /= 2.0;
             estaDefenent  = false;
-            System.out.printf("   ( → ) %s estava en defensa! Dany reduït a %.1f%n", nom, dany);
+            System.out.printf("   ( D ) %s estava en defensa! Dany reduït a %.1f%n", nom, dany);
         }
         salut = Math.max(0, salut - dany);
-        System.out.printf("   ( → ) %s rep %.1f de dany.  Salut: %.1f / %.1f%n",
+        System.out.printf("   ( -> ) %s rep %.1f de dany.  Salut: %.1f / %.1f%n",
                 nom, dany, salut, constitucio * 50);
     }
-    
+
 @Override
     public String toString() {
         String arma = armaEquipada != null ? armaEquipada.getNom() : "Cap";
