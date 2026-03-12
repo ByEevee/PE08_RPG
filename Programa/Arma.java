@@ -25,5 +25,10 @@ public class Arma {
     public String getTipus() { return tipus; }
 
     
+@Override
+    public String toString() {
+        return nom + " [" + tipus + " | " + (magia ? "Màgica" : "Física") + 
+            " | Dany: " + dany + "]";
+}
 
 }

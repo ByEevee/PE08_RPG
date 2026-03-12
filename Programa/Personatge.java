@@ -36,9 +36,11 @@ public class Personatge {
  
     // Constants per a la creació (7 stats: 6 base + sort)
     public static final int TOTAL_PUNTS = 70;
-    public static final int MIN_STAT    = 5;
+    public static final int MIN_STAT    =  5;
     public static final int MAX_STAT    = 20;
-    public static final int NUM_STATS   = 7;
+    public static final int NUM_STATS   =  7;
+    public static final int MIN_SORT    =  0;
+    public static final int MAX_SORT    =  4;
 
      public Personatge(String nom, int edat, String raca, double forca, double destresa, double constitucio, double intelligencia, double saviesa, double carisma, double sort) {
         this.nom           = nom;
@@ -61,7 +63,7 @@ public class Personatge {
         this.critic       = false;
     }
 
-    // ── Setters ───────────────────────────────────────────────
+    // Setters 
     
     public void setNom(String nom)             { this.nom  = nom; }
     public void setEdat(int edat)              { this.edat = edat; }
@@ -77,7 +79,7 @@ public class Personatge {
     public void setSort(double sort)           { this.sort          = Math.max(MIN_STAT, Math.min(sort,          MAX_STAT)); }
     
 
-    // ── Getters ───────────────────────────────────────────────
+    // Getters 
     public String     getNom()           { return nom; }
     public int        getEdat()          { return edat; }
     public String     getRaca()          { return raca; }
@@ -127,7 +129,10 @@ public class Personatge {
                 System.out.printf(" ( ✔ ) Equipada: %s%n", armaEquipada.getNom());
             }
         }
-
+        
+    }
+    public void afegirArma(Arma a) {
+        inventari.add(a);
     }
     private int llegirInt(int min, int max) {
         int val = Integer.MIN_VALUE;
@@ -182,20 +187,39 @@ public class Personatge {
         }
         
         }
+
+    public void regenerarVida() {
+        salut = Math.min(salut + constitucio * 3, constitucio * 50);
+    }
+ 
+    public void regenerarMana() {
+        mana = Math.min(mana + intelligencia * 2, intelligencia * 30);
+    }
     
     public void rebreDanyAtac(double dany) {
         if (esquivar()) {
-            System.out.printf("    → %s ha ESQUIVAT l'atac!%n", nom);
+            System.out.printf("   ( → ) %s ha ESQUIVAT l'atac!%n", nom);
             return;
         }
         if (estaDefenent) {
             dany         /= 2.0;
             estaDefenent  = false;
-            System.out.printf("    → %s estava en defensa! Dany reduït a %.1f%n", nom, dany);
+            System.out.printf("   ( → ) %s estava en defensa! Dany reduït a %.1f%n", nom, dany);
         }
         salut = Math.max(0, salut - dany);
-        System.out.printf("    → %s rep %.1f de dany.  Salut: %.1f / %.1f%n",
+        System.out.printf("   ( → ) %s rep %.1f de dany.  Salut: %.1f / %.1f%n",
                 nom, dany, salut, constitucio * 50);
     }
     
+@Override
+    public String toString() {
+        String arma = armaEquipada != null ? armaEquipada.getNom() : "Cap";
+        return "Nom: " + nom + " [" + raca + "] " + edat + " anys\n" +
+            "Salut: " + salut + "/" + getSalutMaxima() + "\n" +
+            "Mana: " + mana + "/" + getManaMaxima() + "\n" +
+            "FOR:" + forca + " DES:" + destresa + " CON:" + constitucio +
+            " INT:" + intelligencia + " SAV:" + saviesa + 
+            " CAR:" + carisma + " SOR:" + sort + "\n" +
+            "Arma: " + arma;
+}
 }
