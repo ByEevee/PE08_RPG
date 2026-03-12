@@ -35,7 +35,7 @@ public class Personatge {
     private static final Scanner sc  = new Scanner(System.in);
  
     // Constants per a la creació (7 stats: 6 base + sort)
-    public static final int TOTAL_PUNTS = 70;
+    public static final int TOTAL_PUNTS = 60;
     public static final int MIN_STAT    =  5;
     public static final int MAX_STAT    = 20;
     public static final int NUM_STATS   =  6;
